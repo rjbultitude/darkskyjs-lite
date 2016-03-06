@@ -1,11 +1,7 @@
 'use strict';
 
-//Install jQuery and Moment.js using npm or
+//Install ES6 Promise and Moment.js using npm or
 //if using require.js manage the paths as you see fit
-
-//Notes
-//Could use ES6 promises (and polyfill)
-//rather than jQuery
 
 (function(root, factory) {
 	if (typeof define === 'function' && define.amd) {
