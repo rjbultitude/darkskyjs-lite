@@ -34,6 +34,9 @@
 		github.com/brandonlove
 	*/
 
+	//Error strings
+	var fioServiceError = 'There was a problem accessing forecast.io. Make sure you have a valid key';
+
 	//Forecast Class
 	/**
 	 * Will construct a new ForecastIO object
@@ -79,6 +82,18 @@
 		});
 	}
 
+	function checkObject(locObject) {
+		var locationsObjWrap = [];
+		if (!Array.isArray(locObject)) {
+			//console.log('locations was not an array');
+			locationsObjWrap.push(locObject);
+			return locationsObjWrap;
+		}
+		else {
+			return locObject;
+		}
+	}
+
 	/**
 	 * Will build a url string from the lat long coords
 	 * and return a promise with the json
@@ -91,13 +106,6 @@
 		var requestUrl = this.url + latitude + ',' + longitude;
 
 		return makeRequest('GET', requestUrl);
-
-		// return $.ajax({
-		// 	url: requestUrl,
-		// 	error: function(data) {
-		// 		console.log('Error: Data not loaded: ', data);
-		// 	}
-		//});
 	};
 
 	ForecastIO.prototype.requestAllLocData = function requestAllLocData(locations) {
@@ -118,20 +126,27 @@
 	 * @return boolean
 	 */
 	ForecastIO.prototype.getCurrentConditions = function getCurrentConditions(locations, appFn) {
-		var allLocDataArr = this.requestAllLocData(locations);
+		var locationsArr = checkObject(locations);
+		var allLocDataArr = this.requestAllLocData(locationsArr);
 		Promise.all(allLocDataArr).then(function(values) {
 			var dataSets = [];
-			for (var i = 0; i < values.length; i++) {
-					var jsonData = JSON.parse(values[i]);
-					var currently = new ForecastIOConditions(jsonData.currently);
-					dataSets.push(currently);
-				}
-			appFn(dataSets);
-			return dataSets;
+			if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
+				console.log(fioServiceError);
+				return;
+			}
+			else {
+				for (var i = 0; i < values.length; i++) {
+						var jsonData = JSON.parse(values[i]);
+						var currently = new ForecastIOConditions(jsonData.currently);
+						dataSets.push(currently);
+					}
+				appFn(dataSets);
+				return dataSets;
+			}
+		}, function(rejectObj) {
+			console.log(rejectObj.status);
+			console.log(rejectObj.statusText);
 		});
-		// .catch(function(reason) {
-		// 	console.log('error retrieving data', reason);
-		// });
 	};
 
 	/**
@@ -143,25 +158,32 @@
 	 * @return boolean
 	 */
 	ForecastIO.prototype.getForecastToday = function getForecastToday(locations, appFn) {
-		var allLocDataArr = this.requestAllLocData(locations);
+		var locationsArr = checkObject(locations);
+		var allLocDataArr = this.requestAllLocData(locationsArr);
 		Promise.all(allLocDataArr).then(function(values) {
 				var dataSets = [];
-				for (var i = 0; i < values.length; i++) {
-					var today = moment().format('YYYY-MM-DD');
-					var jsonData = JSON.parse(values[i]);
-					for (var j = 0; j < jsonData.hourly.data.length; j++) {
-						var hourlyData = jsonData.hourly.data[j];
-						if (moment.unix(hourlyData.time).format('YYYY-MM-DD') === today) {
-							dataSets.push(new ForecastIOConditions(hourlyData));
+				if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
+					console.log(fioServiceError);
+					return;
+				}
+				else {
+					for (var i = 0; i < values.length; i++) {
+						var today = moment().format('YYYY-MM-DD');
+						var jsonData = JSON.parse(values[i]);
+						for (var j = 0; j < jsonData.hourly.data.length; j++) {
+							var hourlyData = jsonData.hourly.data[j];
+							if (moment.unix(hourlyData.time).format('YYYY-MM-DD') === today) {
+								dataSets.push(new ForecastIOConditions(hourlyData));
+							}
 						}
 					}
+					appFn(dataSets);
+					return dataSets;
 				}
-				appFn(dataSets);
-				return dataSets;
-			});
-			// .catch(function(reason) {
-			// 	console.log('error retrieving data: ', reason);
-			// });
+			}, function(rejectObj) {
+				console.log(rejectObj.status);
+				console.log(rejectObj.statusText);
+		});
 	};
 
 	/**
@@ -173,22 +195,29 @@
 	 * @return boolean
 	 */
 	ForecastIO.prototype.getForecastWeek = function getForecastWeek(locations, appFn) {
-		var allLocDataArr = this.requestAllLocData(locations);
+		var locationsArr = checkObject(locations);
+		var allLocDataArr = this.requestAllLocData(locationsArr);
 		Promise.all(allLocDataArr).then(function(values) {
 				var dataSets = [];
-				for (var i = 0; i < values.length; i++) {
-					var jsonData = JSON.parse(values[i]);
-					for (var j = 0; j < jsonData.daily.data.length; j++) {
-						var dailyData = jsonData.daily.data[j];
-						dataSets.push(new ForecastIOConditions(dailyData));
-					}
+				if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
+					console.log(fioServiceError);
+					return;
 				}
-				appFn(dataSets);
-				return dataSets;
-			});
-			// .catch(function(reason) {
-			// 	console.log('error retrieving data: ', reason);
-			// });
+				else {
+					for (var i = 0; i < values.length; i++) {
+						var jsonData = JSON.parse(values[i]);
+						for (var j = 0; j < jsonData.daily.data.length; j++) {
+							var dailyData = jsonData.daily.data[j];
+							dataSets.push(new ForecastIOConditions(dailyData));
+						}
+					}
+					appFn(dataSets);
+					return dataSets;
+				}
+			}, function(rejectObj) {
+				console.log(rejectObj.status);
+				console.log(rejectObj.statusText);
+		});
 	};
 
 	function ForecastIOConditions(rawData) {
