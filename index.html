@@ -1,36 +1,51 @@
-	<!DOCTYPE html>
-<html lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title></title>
+	<title>DarkSky.net JavaScript Wrapper</title>
 	<meta name="description" content="">
 	<meta name="keywords" content="" />
 	<meta name="author" content="">
-
+  <style>
+    body {
+      margin: 0 auto;
+      max-width: 600px;
+      font-family: sans-serif;
+    }
+  </style>
 </head>
 
 <body>
 	<h1>Forecast.io JS API</h1>
-
+  <p>The examples below are the product of a request
+    that takes two locations (Berlin and Abalessa) that are
+    given in Lat Long coordinates.
+  </p>
+  <p>Temperature is expressed in Fahrenheit</p>
 	<h2>Current Temperatures</h2>
-	<ul id="currentTemp"></ul>
+	<div id="currentTemp">
+    <p>Loading...</p>
+  </div>
 
 	<hr>
 
 	<h2>Forecast for today</h2>
-	<ul id="itemList"></ul>
+	<div id="itemList">
+    <p>Loading...</p>
+  </div>
 
 	<hr>
 
 	<h2>Forecast for the week</h2>
-	<ul id="itemList2"></ul>
+	<div id="itemList2">
+    <p>Loading...</p>
+  </div>
 
 	<script src="require.js"></script>
 <!--	<script src="forecast.io.js"</script> -->
 	<script>
-	var ForecastIO = require(['forecast.io'], function(ForecastIO) {
+	var DarkSky = require(['darksky.net'], function(DarkSky) {
 	    //This function is called when scripts/helper/util.js is loaded.
 	    //If util.js calls define(), then this function is not fired until
 	    //util's dependencies have loaded, and the util argument will hold
@@ -41,32 +56,35 @@
 		 */
 		var locations = [
 			{
-				latitude: '52.4308', 
+        name: 'Berlin',
+				latitude: '52.4308',
 				longitude: '13.2588'
 			},
 			{
-				latitude: '22.4308', 
+        name: 'Abalessa',
+        latitude: '22.4308',
 				longitude: '3.2588'
 			}
 		];
 		// Single Object Example
 		// var locations = {
-		// 	latitude: '52.4308', 
+		// 	latitude: '52.4308',
 		// 	longitude: '13.2588'
 		// };
-		
-		var forecast = new ForecastIO({
+
+		var forecast = new DarkSky({
 			PROXY_SCRIPT: 'proxy.php'
 		});
-	
+
 		/*
 		 * GET CURRENT CONDITIONS
 		 */
 		forecast.getCurrentConditions(locations, function(conditions) {
 			var items = '';
-			// echo temperature
+			console.log('conditions', conditions);
 			for (var i = 0; i < conditions.length; i++) {
-				items += '<li>' + conditions[i].getTemperature() + '</li>';
+        items += '<p>' + locations[i].name + '</p>';
+				items += '<p>' + conditions[i].temperature() + '</p>';
 			}
 			document.getElementById('currentTemp').innerHTML = items;
 
@@ -77,27 +95,30 @@
 		 */
 		forecast.getForecastToday(locations, function(conditions) {
 			var items = '';
-		
+      console.log('conditions', conditions);
 			for (var i = 0; i < conditions.length; i++) {
-				items += '<li>' + conditions[i].getTime('HH:mm') + ': ' + conditions[i].getTemperature() + '</li>';
+        items += '<p>' + locations[i].name + '</p>';
+				items += '<p>' + conditions[i].time('HH:mm') + ': temperature ' + conditions[i].temperature() + '</p>';
 			}
-		
+
 			document.getElementById('itemList').innerHTML = items;
 		});
-		
-		/*	
+
+		/*
 		 * GET DAILY CONDITIONS FOR NEXT 7 DAYS
-		 */ 
+		 */
 		forecast.getForecastWeek(locations, function(conditions) {
-			var items2 = '';
-		
+			var items = '';
+      console.log('conditions', conditions);
 			for (var i = 0; i < conditions.length; i++) {
-				items2 += '<li>' + conditions[i].getTime('YYYY-MM-DD') + ': ' + conditions[i].getMaxTemperature() + '</li>';
+        console.log('locations[i]', locations[i]);
+        items += '<p>' + locations[i].name + '</p>';
+				items += '<p>' + conditions[i].time('YYYY-MM-DD') + ': ' + conditions[i].temperatureMax() + '</p>';
 			}
-		
-			document.getElementById('itemList2').innerHTML = items2;
+
+			document.getElementById('itemList2').innerHTML = items;
 		});
-	});	
+	});
 
 	</script>
 </body>

@@ -7,22 +7,22 @@
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
 		define(['moment', 'es6-promise'], function(moment) {
-			return (root.ForecastIO = factory(moment));
+			return (root.DarkSkyNet = factory(moment));
 		});
 	} else if (typeof module === 'object' && module.exports) {
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
-		module.exports = (root.ForecastIO = factory(require('moment'), require('es6-promise').Promise));
+		module.exports = (root.DarkSkyNet = factory(require('moment'), require('es6-promise').Promise));
 	} else {
 		// Browser globals (root is window)
-		root.ForecastIO = factory(root.moment);
+		root.DarkSkyNet = factory(root.moment);
 	}
 }(this, function(moment) {
 
-	/* 	By Ian Tearle 
+	/* 	By Ian Tearle
 		github.com/iantearle
-		
+
 		Other contributors
 		Richard Bultitude
 		github.com/rjbultitude
@@ -31,27 +31,27 @@
 	*/
 
 	//Error strings
-	var fioServiceError = 'There was a problem accessing forecast.io. Make sure you have a valid key';
+	var fioServiceError = 'There was a problem accessing darksky.net. Make sure you have a valid key';
 
 	//Forecast Class
 	/**
-	 * Will construct a new ForecastIO object
+	 * Will construct a new DarkSkyNet object
 	 *
 	 * @param string $config
 	 * @return boolean
 	 */
-	function ForecastIO(config) {
+	function DarkSkyNet(config) {
 		//var PROXY_SCRIPT = '/proxy.php';
 		if (!config) {
-			console.log('You must pass ForecastIO configurations');
+			console.log('You must pass DarkSkyNet configurations');
 		}
 		if (!config.PROXY_SCRIPT) {
 			if (!config.API_KEY) {
-				console.log('API_KEY or PROXY_SCRIPT must be set in ForecastIO config');
+				console.log('API_KEY or PROXY_SCRIPT must be set in DarkSkyNet config');
 			}
 		}
 		this.API_KEY = config.API_KEY;
-		this.url = (typeof config.PROXY_SCRIPT !== 'undefined') ? config.PROXY_SCRIPT + '?url=' : 'https://api.forecast.io/forecast/' + config.API_KEY + '/';
+		this.url = (typeof config.PROXY_SCRIPT !== 'undefined') ? config.PROXY_SCRIPT + '?url=': 'https://api.darksky.net/forecast/' + config.API_KEY + '/';
 	}
 
 	function makeRequest(method, url) {
@@ -78,6 +78,15 @@
 		});
 	}
 
+	/**
+	 * Checks the location object
+	 * passed into the app
+	 * and wraps it in an array
+	 * if it wasn't one already
+	 *
+	 * @param object $locObject
+	 * @return array
+	 */
 	function checkObject(locObject) {
 		var locationsObjWrap = [];
 		if (!Array.isArray(locObject)) {
@@ -98,13 +107,12 @@
 	 * @param number $longitude
 	 * @return promise object
 	 */
-	ForecastIO.prototype.requestData = function requestData(latitude, longitude) {
+	DarkSkyNet.prototype.requestData = function requestData(latitude, longitude) {
 		var requestUrl = this.url + latitude + ',' + longitude;
-
 		return makeRequest('GET', requestUrl);
 	};
 
-	ForecastIO.prototype.requestAllLocData = function requestAllLocData(locations) {
+	DarkSkyNet.prototype.requestAllLocData = function requestAllLocData(locations) {
 		var locDataArr = [];
 		for (var i = 0; i < locations.length; i++) {
 			var content = this.requestData(locations[i].latitude, locations[i].longitude);
@@ -121,19 +129,19 @@
 	 * @param function $appFn
 	 * @return boolean
 	 */
-	ForecastIO.prototype.getCurrentConditions = function getCurrentConditions(locations, appFn) {
+	DarkSkyNet.prototype.getCurrentConditions = function getCurrentConditions(locations, appFn) {
 		var locationsArr = checkObject(locations);
 		var allLocDataArr = this.requestAllLocData(locationsArr);
 		Promise.all(allLocDataArr).then(function(values) {
-			var dataSets = [];
 			if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
 				console.log(fioServiceError);
 				return;
 			}
 			else {
+				var dataSets = [];
 				for (var i = 0; i < values.length; i++) {
 						var jsonData = JSON.parse(values[i]);
-						var currently = new ForecastIOConditions(jsonData.currently);
+						var currently = new DarkSkyNetConditions(jsonData.currently);
 						dataSets.push(currently);
 					}
 				appFn(dataSets);
@@ -153,23 +161,23 @@
 	 * @param function $appFn
 	 * @return boolean
 	 */
-	ForecastIO.prototype.getForecastToday = function getForecastToday(locations, appFn) {
+	DarkSkyNet.prototype.getForecastToday = function getForecastToday(locations, appFn) {
 		var locationsArr = checkObject(locations);
 		var allLocDataArr = this.requestAllLocData(locationsArr);
 		Promise.all(allLocDataArr).then(function(values) {
-				var dataSets = [];
 				if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
 					console.log(fioServiceError);
 					return;
 				}
 				else {
+					var dataSets = [];
 					for (var i = 0; i < values.length; i++) {
 						var today = moment().format('YYYY-MM-DD');
 						var jsonData = JSON.parse(values[i]);
 						for (var j = 0; j < jsonData.hourly.data.length; j++) {
 							var hourlyData = jsonData.hourly.data[j];
 							if (moment.unix(hourlyData.time).format('YYYY-MM-DD') === today) {
-								dataSets.push(new ForecastIOConditions(hourlyData));
+								dataSets.push(new DarkSkyNetConditions(hourlyData));
 							}
 						}
 					}
@@ -190,21 +198,21 @@
 	 * @param function $appFn
 	 * @return boolean
 	 */
-	ForecastIO.prototype.getForecastWeek = function getForecastWeek(locations, appFn) {
+	DarkSkyNet.prototype.getForecastWeek = function getForecastWeek(locations, appFn) {
 		var locationsArr = checkObject(locations);
 		var allLocDataArr = this.requestAllLocData(locationsArr);
 		Promise.all(allLocDataArr).then(function(values) {
-				var dataSets = [];
 				if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
 					console.log(fioServiceError);
 					return;
 				}
 				else {
+					var dataSets = [];
 					for (var i = 0; i < values.length; i++) {
 						var jsonData = JSON.parse(values[i]);
 						for (var j = 0; j < jsonData.daily.data.length; j++) {
 							var dailyData = jsonData.daily.data[j];
-							dataSets.push(new ForecastIOConditions(dailyData));
+							dataSets.push(new DarkSkyNetConditions(dailyData));
 						}
 					}
 					appFn(dataSets);
@@ -216,8 +224,8 @@
 		});
 	};
 
-	function ForecastIOConditions(rawData) {
-		ForecastIOConditions.prototype = {
+	function DarkSkyNetConditions(rawData) {
+		DarkSkyNetConditions.prototype = {
 			rawData: rawData
 		};
 		/**
@@ -225,15 +233,23 @@
 		 *
 		 * @return String
 		 */
-		this.getTemperature = function() {
+		this.temperature = function() {
 			return rawData.temperature;
+		};
+		/**
+		 * Will return the apparent temperature
+		 *
+		 * @return String
+		 */
+		this.apparentTemperature = function() {
+			return rawData.apparentTemperature;
 		};
 		/**
 		 * Get the summary of the conditions
 		 *
 		 * @return String
 		 */
-		this.getSummary = function() {
+		this.summary = function() {
 			return rawData.summary;
 		};
 		/**
@@ -241,7 +257,7 @@
 		 *
 		 * @return String
 		 */
-		this.getIcon = function() {
+		this.icon = function() {
 			return rawData.icon;
 		};
 		/**
@@ -250,7 +266,7 @@
 		 * @param String $format
 		 * @return String
 		 */
-		this.getTime = function(format) {
+		this.time = function(format) {
 			if (!format) {
 				return rawData.time;
 			} else {
@@ -262,7 +278,7 @@
 		 *
 		 * @return String
 		 */
-		this.getPressure = function() {
+		this.pressure = function() {
 			return rawData.pressure;
 		};
 		/**
@@ -270,7 +286,7 @@
 		 *
 		 * @return String
 		 */
-		this.getHumidity = function() {
+		this.humidity = function() {
 			return rawData.humidity;
 		};
 		/**
@@ -278,7 +294,7 @@
 		 *
 		 * @return String
 		 */
-		this.getWindSpeed = function() {
+		this.windSpeed = function() {
 			return rawData.windSpeed;
 		};
 		/**
@@ -286,7 +302,7 @@
 		 *
 		 * @return type
 		 */
-		this.getWindBearing = function() {
+		this.windBearing = function() {
 			return rawData.windBearing;
 		};
 		/**
@@ -294,7 +310,7 @@
 		 *
 		 * @return type
 		 */
-		this.getPrecipitationType = function() {
+		this.precipType = function() {
 			return rawData.precipType;
 		};
 		/**
@@ -302,7 +318,7 @@
 		 *
 		 * @return type
 		 */
-		this.getPrecipitationProbability = function() {
+		this.precipProbability = function() {
 			return rawData.precipProbability;
 		};
 		/**
@@ -310,7 +326,7 @@
 		 *
 		 * @return type
 		 */
-		this.getCloudCover = function() {
+		this.cloudCover = function() {
 			return rawData.cloudCover;
 		};
 		/**
@@ -320,7 +336,7 @@
 		 *
 		 * @return type
 		 */
-		this.getMinTemperature = function() {
+		this.temperatureMin = function() {
 			return rawData.temperatureMin;
 		};
 		/**
@@ -330,7 +346,7 @@
 		 *
 		 * @return type
 		 */
-		this.getMaxTemperature = function() {
+		this.temperatureMax = function() {
 			return rawData.temperatureMax;
 		};
 		/**
@@ -340,7 +356,7 @@
 		 *
 		 * @return type
 		 */
-		this.getSunrise = function() {
+		this.sunriseTime = function() {
 			return rawData.sunriseTime;
 		};
 		/**
@@ -350,7 +366,7 @@
 		 *
 		 * @return type
 		 */
-		this.getSunset = function() {
+		this.sunsetTime = function() {
 			return rawData.sunsetTime;
 		};
 		/**
@@ -358,7 +374,7 @@
 		 *
 		 * @return number
 		 */
-		this.getPrecipIntensity = function() {
+		this.precipIntensity = function() {
 			return rawData.precipIntensity;
 		};
 		/**
@@ -366,7 +382,7 @@
 		 *
 		 * @return number
 		 */
-		this.getDewPoint = function() {
+		this.dewPoint = function() {
 			return rawData.dewPoint;
 		};
 		/**
@@ -374,10 +390,34 @@
 		 *
 		 * @return number
 		 */
-		this.getOzone = function() {
+		this.ozone = function() {
 			return rawData.ozone;
+		};
+    /**
+		 * get the visibility
+		 *
+		 * @return number
+		 */
+		this.visibility = function() {
+			return rawData.visibility;
+		};
+		/**
+		 * get the nearest storm bearing
+		 *
+		 * @return number
+		 */
+		this.nearestStormBearing = function() {
+			return rawData.nearestStormBearing;
+		};
+    /**
+		 * get the nearest storm distance
+		 *
+		 * @return number
+		 */
+		this.nearestStormDistance = function() {
+			return rawData.nearestStormDistance;
 		};
 	}
 
-	return ForecastIO;
+	return DarkSkyNet;
 }));
