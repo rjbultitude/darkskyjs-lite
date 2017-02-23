@@ -1,7 +1,7 @@
 <?php
 // File Name: proxy.php
 
-$api_key = '28300ced7fc0b85fb245ef778aa74720';
+$api_key = 'b962d5ee80be5293a234b69fb975629c';
 
 $API_ENDPOINT = 'https://api.darksky.net/forecast/';
 $url = $API_ENDPOINT . $api_key . '/';
