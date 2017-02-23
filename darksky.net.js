@@ -132,20 +132,21 @@
 	DarkSkyNet.prototype.getCurrentConditions = function getCurrentConditions(locations, appFn) {
 		var locationsArr = checkObject(locations);
 		var allLocDataArr = this.requestAllLocData(locationsArr);
-		Promise.all(allLocDataArr).then(function(values) {
-			if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
+		Promise.all(allLocDataArr).then(function(forecasts) {
+			if (forecasts.length === 0 || forecasts[0] === '' || forecasts[0] === null || forecasts[0] === undefined) {
 				console.log(fioServiceError);
 				return;
 			}
 			else {
-				var dataSets = [];
-				for (var i = 0; i < values.length; i++) {
-						var jsonData = JSON.parse(values[i]);
-						var currently = new DarkSkyNetConditions(jsonData.currently);
-						dataSets.push(currently);
+				var currDataSets = [];
+				for (var i = 0; i < forecasts.length; i++) {
+						var jsonData = JSON.parse(forecasts[i]);
+						currDataSets.push(new DarkSkyNetConditions(jsonData.currently));
 					}
-				appFn(dataSets);
-				return dataSets;
+        console.log('currDataSets', currDataSets);
+        //Pass data to callback
+				appFn(currDataSets);
+				return currDataSets;
 			}
 		}, function(rejectObj) {
 			console.log(rejectObj.status);
@@ -164,25 +165,22 @@
 	DarkSkyNet.prototype.getForecastToday = function getForecastToday(locations, appFn) {
 		var locationsArr = checkObject(locations);
 		var allLocDataArr = this.requestAllLocData(locationsArr);
-		Promise.all(allLocDataArr).then(function(values) {
-				if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
+		Promise.all(allLocDataArr).then(function(forecasts) {
+				if (forecasts.length === 0 || forecasts[0] === '' || forecasts[0] === null || forecasts[0] === undefined) {
 					console.log(fioServiceError);
 					return;
 				}
 				else {
-					var dataSets = [];
-					for (var i = 0; i < values.length; i++) {
-						var today = moment().format('YYYY-MM-DD');
-						var jsonData = JSON.parse(values[i]);
-						for (var j = 0; j < jsonData.hourly.data.length; j++) {
-							var hourlyData = jsonData.hourly.data[j];
-							if (moment.unix(hourlyData.time).format('YYYY-MM-DD') === today) {
-								dataSets.push(new DarkSkyNetConditions(hourlyData));
-							}
-						}
+					var todayDataSets = [];
+					for (var i = 0; i < forecasts.length; i++) {
+						var jsonData = JSON.parse(forecasts[i]);
+            //DarkSky returns an array for each
+            todayDataSets.push(new DarkSkyNetConditions(jsonData.hourly.data));
 					}
-					appFn(dataSets);
-					return dataSets;
+          console.log('todayDataSets', todayDataSets);
+          //Pass data to callback
+					appFn(todayDataSets);
+					return todayDataSets;
 				}
 			}, function(rejectObj) {
 				console.log(rejectObj.status);
@@ -201,22 +199,22 @@
 	DarkSkyNet.prototype.getForecastWeek = function getForecastWeek(locations, appFn) {
 		var locationsArr = checkObject(locations);
 		var allLocDataArr = this.requestAllLocData(locationsArr);
-		Promise.all(allLocDataArr).then(function(values) {
-				if (values.length === 0 || values[0] === '' || values[0] === null || values[0] === undefined) {
+		Promise.all(allLocDataArr).then(function(forecasts) {
+				if (forecasts.length === 0 || forecasts[0] === '' || forecasts[0] === null || forecasts[0] === undefined) {
 					console.log(fioServiceError);
 					return;
 				}
 				else {
-					var dataSets = [];
-					for (var i = 0; i < values.length; i++) {
-						var jsonData = JSON.parse(values[i]);
-						for (var j = 0; j < jsonData.daily.data.length; j++) {
-							var dailyData = jsonData.daily.data[j];
-							dataSets.push(new DarkSkyNetConditions(dailyData));
-						}
+					var weekDataSets = [];
+					for (var i = 0; i < forecasts.length; i++) {
+						var jsonData = JSON.parse(forecasts[i]);
+            //DarkSky returns an array for each
+						weekDataSets.push(new DarkSkyNetConditions(jsonData.daily.data));
 					}
-					appFn(dataSets);
-					return dataSets;
+          console.log('weekDataSets', weekDataSets);
+          //Pass data to callback
+					appFn(weekDataSets);
+					return weekDataSets;
 				}
 			}, function(rejectObj) {
 				console.log(rejectObj.status);

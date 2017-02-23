@@ -79,44 +79,45 @@
 		/*
 		 * GET CURRENT CONDITIONS
 		 */
-		forecast.getCurrentConditions(locations, function(conditions) {
-			var items = '';
-			console.log('conditions', conditions);
-			for (var i = 0; i < conditions.length; i++) {
+		forecast.getCurrentConditions(locations, function(locsConditions) {
+      var items = '';
+      for (var i = 0; i < locsConditions.length; i++) {
+        var locConditions = locsConditions[i];
         items += '<p>' + locations[i].name + '</p>';
-				items += '<p>' + conditions[i].temperature() + '</p>';
-			}
+        console.log('locConditions', locConditions);
+        //Call desired fns
+        items += '<p>' + locConditions.temperature() + '</p>';
+      }
 			document.getElementById('currentTemp').innerHTML = items;
-
 		});
 
 		/*
 		 * GET HOURLY CONDITIONS FOR TODAY
 		 */
 		forecast.getForecastToday(locations, function(conditions) {
-			var items = '';
-      console.log('conditions', conditions);
-			for (var i = 0; i < conditions.length; i++) {
-        items += '<p>' + locations[i].name + '</p>';
-				items += '<p>' + conditions[i].time('HH:mm') + ': temperature ' + conditions[i].temperature() + '</p>';
-			}
-
-			document.getElementById('itemList').innerHTML = items;
+			// var items = '';
+      // console.log('getForecastToday conditions', conditions);
+			// for (var i = 0; i < conditions.length; i++) {
+      //   //items += '<p>' + locations[i].name + '</p>';
+			// 	items += '<p>' + conditions[i].time('HH:mm') + ': temperature ' + conditions[i].temperature() + '</p>';
+			// }
+      //
+			// document.getElementById('itemList').innerHTML = items;
 		});
 
 		/*
 		 * GET DAILY CONDITIONS FOR NEXT 7 DAYS
 		 */
 		forecast.getForecastWeek(locations, function(conditions) {
-			var items = '';
-      console.log('conditions', conditions);
-			for (var i = 0; i < conditions.length; i++) {
-        console.log('locations[i]', locations[i]);
-        items += '<p>' + locations[i].name + '</p>';
-				items += '<p>' + conditions[i].time('YYYY-MM-DD') + ': ' + conditions[i].temperatureMax() + '</p>';
-			}
-
-			document.getElementById('itemList2').innerHTML = items;
+			// var items = '';
+			// for (var i = 0; i < conditions.length; i++) {
+      //   items += '<p>' + locations[i].name + '</p>';
+			// 	conditions[i].forEach(function(daily) {
+      //     items += '<p>' + daily[i].time('YYYY-MM-DD') + ': ' + daily[i].temperatureMax() + '</p>';
+      //   });
+			// }
+      //
+			// document.getElementById('itemList2').innerHTML = items;
 		});
 	});
 
