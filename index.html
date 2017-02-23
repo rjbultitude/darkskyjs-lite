@@ -28,23 +28,19 @@
     <p>Loading...</p>
   </div>
 
-	<hr>
+	<article class="article-daily">
+  	<h2>Forecast for today</h2>
+  </article>
 
-	<h2>Forecast for today</h2>
-	<div id="itemList">
-    <p>Loading...</p>
-  </div>
-
-	<hr>
-
-	<h2>Forecast for the week</h2>
-	<div id="itemList2">
-    <p>Loading...</p>
-  </div>
+  <article class="article-weekly">
+  	<h2>Forecast for the week</h2>
+  </article>
 
 	<script src="require.js"></script>
 <!--	<script src="forecast.io.js"</script> -->
 	<script>
+  var dailyArticle = document.querySelector('.article-daily');
+  var weeklyArticle = document.querySelector('.article-weekly');
 	var DarkSky = require(['darksky.net'], function(DarkSky) {
 	    //This function is called when scripts/helper/util.js is loaded.
 	    //If util.js calls define(), then this function is not fired until
@@ -79,14 +75,13 @@
 		/*
 		 * GET CURRENT CONDITIONS
 		 */
-		forecast.getCurrentConditions(locations, function(locsConditions) {
+		forecast.getCurrentConditions(locations, function(locsCurrCond) {
       var items = '';
-      for (var i = 0; i < locsConditions.length; i++) {
-        var locConditions = locsConditions[i];
-        items += '<p>' + locations[i].name + '</p>';
-        console.log('locConditions', locConditions);
+      for (var i = 0; i < locsCurrCond.length; i++) {
+        var locCurrCond = locsCurrCond[i];
+        items += '<p>' + locsCurrCond[i].name + '</p>';
         //Call desired fns
-        items += '<p>' + locConditions.temperature() + '</p>';
+        items += '<p>Temperature: ' + locCurrCond.temperature() + '</p>';
       }
 			document.getElementById('currentTemp').innerHTML = items;
 		});
@@ -94,30 +89,52 @@
 		/*
 		 * GET HOURLY CONDITIONS FOR TODAY
 		 */
-		forecast.getForecastToday(locations, function(conditions) {
-			// var items = '';
-      // console.log('getForecastToday conditions', conditions);
-			// for (var i = 0; i < conditions.length; i++) {
-      //   //items += '<p>' + locations[i].name + '</p>';
-			// 	items += '<p>' + conditions[i].time('HH:mm') + ': temperature ' + conditions[i].temperature() + '</p>';
-			// }
-      //
-			// document.getElementById('itemList').innerHTML = items;
+		forecast.getForecastToday(locations, function(locsDailyCond) {
+      //HTML
+			var items = '';
+      locsDailyCond.forEach(function(item, index) {
+        var section = document.createElement('section');
+        dailyArticle.appendChild(section);
+      });
+      var sections = document.querySelectorAll('.article-daily section');
+      //Output
+      for (var i = 0; i < locsDailyCond.length; i++) {
+        //Data output
+        var locDailyCond = locsDailyCond[i];
+        items += '<p>' + locDailyCond[i].name + '</p>';
+        for (var j = 0; j < locDailyCond.length; j++) {
+          items += '<p>Time: ' + locDailyCond[j].time('HH:mm') + ': temperature ' + locDailyCond[j].temperature() + '</p>';
+        }
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = items;
+        sections[i].appendChild(tempDiv);
+			}
 		});
 
 		/*
 		 * GET DAILY CONDITIONS FOR NEXT 7 DAYS
 		 */
-		forecast.getForecastWeek(locations, function(conditions) {
-			// var items = '';
-			// for (var i = 0; i < conditions.length; i++) {
-      //   items += '<p>' + locations[i].name + '</p>';
-			// 	conditions[i].forEach(function(daily) {
-      //     items += '<p>' + daily[i].time('YYYY-MM-DD') + ': ' + daily[i].temperatureMax() + '</p>';
-      //   });
-			// }
-      //
-			// document.getElementById('itemList2').innerHTML = items;
+		forecast.getForecastWeek(locations, function(locsWeeklyCond) {
+      //html
+			var items = '';
+      locsWeeklyCond.forEach(function() {
+        var section = document.createElement('section');
+        weeklyArticle.appendChild(section);
+      });
+      var sections = document.querySelectorAll('.article-weekly section');
+      console.log('sections', sections);
+      //Output
+      for (var i = 0; i < locsWeeklyCond.length; i++) {
+        //Data output
+        var locWeeklyCond = locsWeeklyCond[i];
+        items += '<p>' + locWeeklyCond[i].name + '</p>';
+        for (var j = 0; j < locWeeklyCond.length; j++) {
+          items += '<p>Date: ' + locWeeklyCond[j].time('YYYY-MM-DD') + ': Max temperature ' + locWeeklyCond[j].temperatureMax() + '</p>';
+        }
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = items;
+        sections[i].appendChild(tempDiv);
+      }
 		});
 	});
 

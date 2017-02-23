@@ -140,8 +140,8 @@
 			else {
 				var currDataSets = [];
 				for (var i = 0; i < forecasts.length; i++) {
-						var jsonData = JSON.parse(forecasts[i]);
-						currDataSets.push(new DarkSkyNetConditions(jsonData.currently));
+						var currJsonData = JSON.parse(forecasts[i]);
+						currDataSets.push(new DarkSkyNetConditions(currJsonData.currently, locations[i].name));
 					}
         console.log('currDataSets', currDataSets);
         //Pass data to callback
@@ -171,16 +171,23 @@
 					return;
 				}
 				else {
-					var todayDataSets = [];
+					var hourlyDataSets = [];
 					for (var i = 0; i < forecasts.length; i++) {
-						var jsonData = JSON.parse(forecasts[i]);
+            var today = moment().format('YYYY-MM-DD');
+            var thisHourlySet = [];
+						var dailyJsonData = JSON.parse(forecasts[i]);
             //DarkSky returns an array for each
-            todayDataSets.push(new DarkSkyNetConditions(jsonData.hourly.data));
+            for (var j = 0; j < dailyJsonData.hourly.data.length; j++) {
+							var hourlyData = dailyJsonData.hourly.data[j];
+              if (moment.unix(hourlyData.time).format('YYYY-MM-DD') === today) {
+                thisHourlySet.push(new DarkSkyNetConditions(hourlyData, locations[i].name));
+              }
+            }
+            hourlyDataSets.push(thisHourlySet);
 					}
-          console.log('todayDataSets', todayDataSets);
           //Pass data to callback
-					appFn(todayDataSets);
-					return todayDataSets;
+					appFn(hourlyDataSets);
+					return hourlyDataSets;
 				}
 			}, function(rejectObj) {
 				console.log(rejectObj.status);
@@ -207,11 +214,15 @@
 				else {
 					var weekDataSets = [];
 					for (var i = 0; i < forecasts.length; i++) {
-						var jsonData = JSON.parse(forecasts[i]);
+            var thisWeekSets = [];
+						var weeklyJsonData = JSON.parse(forecasts[i]);
             //DarkSky returns an array for each
-						weekDataSets.push(new DarkSkyNetConditions(jsonData.daily.data));
+            for (var j = 0; j < weeklyJsonData.daily.data.length; j++) {
+              var dailyDataSet = weeklyJsonData.daily.data[j];
+              thisWeekSets.push(new DarkSkyNetConditions(dailyDataSet, locations[i].name))
+            }
+						weekDataSets.push(thisWeekSets);
 					}
-          console.log('weekDataSets', weekDataSets);
           //Pass data to callback
 					appFn(weekDataSets);
 					return weekDataSets;
@@ -222,10 +233,11 @@
 		});
 	};
 
-	function DarkSkyNetConditions(rawData) {
+	function DarkSkyNetConditions(rawData, name) {
 		DarkSkyNetConditions.prototype = {
 			rawData: rawData
 		};
+    this.name = name || 'no name provided';
 		/**
 		 * Will return the temperature
 		 *
