@@ -1,6 +1,6 @@
 {
-  "name": "darksky.net-js",
-  "title": "DarkSky.net JavaScript",
+  "name": "darksky.net-javascript-api",
+  "title": "DarkSky.net JavaScript API",
   "version": "1.0.0",
   "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
   "keywords": [
