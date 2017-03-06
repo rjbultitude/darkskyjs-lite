@@ -1,36 +1,41 @@
-{
-  "name": "darksky.net-javascript-api",
-  "title": "DarkSky.net JavaScript API",
-  "version": "0.0.1",
-  "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
-  "keywords": [
-    "darksky",
-    "weather",
-    "api"
-  ],
-  "author": {
-    "name": "rjbultitude",
-    "url": "http://point-b.co.uk"
-  },
-  "license": "MIT",
-  "contributors": [
-    "Richard Bultitude",
-    "Ian Tearle"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rjbultitude/darksky.net-javascript-api.git"
-  },
-  "homepage": "https://github.com/rjbultitude/darksky.net-javascript-api#readme",
-  "main": "darksky.net.js",
-  "scripts": {
-    "build": "gulp"
-  },
-  "dependencies": {
-    "es6-promise": "^4.0.5",
-    "moment": "^2.17.1"
-},
-  "engines": {
-      "node": ">=4.2.4"
-  }
+{  
+    "name":"darksky.net-javascript-api",
+    "title":"DarkSky.net JavaScript API",
+    "version":"0.0.1",
+    "description":"A promise-based wrapper for requesting weather data from DarkSky.net",
+    "keywords":[  
+        "darksky",
+        "weather",
+        "api"
+    ],
+    "author":{  
+        "name":"rjbultitude",
+        "url":"http://point-b.co.uk"
+    },
+    "licenses":[  
+        {  
+            "type":"MIT",
+            "url":"https://github.com/rjbultitude/darksky.net-javascript-api/LICENSE-MIT"
+        }
+    ],
+    "contributors":[  
+        "Richard Bultitude",
+        "Ian Tearle"
+    ],
+    "repository":{  
+        "type":"git",
+        "url":"git+https://github.com/rjbultitude/darksky.net-javascript-api.git"
+    },
+    "homepage":"https://github.com/rjbultitude/darksky.net-javascript-api#readme",
+    "main":"darksky.net.js",
+    "scripts":{  
+        "build":"gulp"
+    },
+    "dependencies":{  
+        "es6-promise":"^4.0.5",
+        "moment":"^2.17.1"
+    },
+    "engines":{  
+        "node":">=4.2.4"
+    }
 }
