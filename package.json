@@ -1,0 +1,37 @@
+{
+  "name": "darksky.net-js",
+  "title": "DarkSky.net JavaScript",
+  "version": "1.0.0",
+  "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
+  "author": {
+    "name": "rjbultitude",
+    "url": "http://point-b.co.uk"
+  },
+  "contributors": [
+    "Richard Bultitude",
+    "Ian Tearle",
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "build": "gulp",
+  },
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "del": "^2.0.2",
+    "eslint": "^1.5.1",
+    "gulp": "^3.8.10",
+    "gulp-autoprefixer": "^3.0.2",
+    "gulp-eslint": "^1.0.0",
+    "gulp-modernizr": "^1.0.0-alpha",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-strip-debug": "^1.0.2",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
+  }
+}

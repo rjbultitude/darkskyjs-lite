@@ -1,14 +1,14 @@
 Pull Requests welcome, if you have used this script in a project let me know, I'd like to start a directory. Have fun. 
 
-forecast.io-javascript-api
+darksky.net-javascript-api
 ==========================
 
-forecast.io JavaScript API
+darksky.net JavaScript API
 
 ## Getting Started
 PHP is required for proxy to work. This is a cross domain policy workaround.
 
-Forecast.io.js is configured to work with both [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) and [CJS](https://en.wikipedia.org/wiki/CommonJS) applications. When the module is loaded it will return a constructor that, once run, will provide the necessary interface functions, namely:
+darksky.net.js is configured to work with both [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) and [CJS](https://en.wikipedia.org/wiki/CommonJS) applications. When the module is loaded it will return a constructor that, once run, will provide the necessary interface functions, namely:
 
 * `getCurrentConditions`
 * `getForecastToday`
@@ -20,9 +20,9 @@ If you're using [Require.JS](http://requirejs.org/) use the example configuratio
 
 If you're using [Webpack](http://webpack.github.io/), [Browserify](http://browserify.org/) or some other CJS module loader simply require the module like so
 
-`var ForecastIO = require('forecast.io');`
+`var Darksky = require('darksky.net');`
 
-and use the `ForecastIO` constructor as per the demo on the index page.
+and use the `Darksky` constructor as per the demo on the index page.
 
 ## Location data
 
@@ -43,36 +43,12 @@ Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment
 `npm install es6-promise`
 
 Ref: [https://www.npmjs.com/package/es6-promise](https://www.npmjs.com/package/es6-promise)
-
-
-ti.forecast.io-javascript-api
-=============================
-
-ti.forecast.io Javascript API
-
-The Titanium version works a little differently. Callbacks help with data manipulation over the standard javascript API,
-there is also no need for a proxy.
-
-    require("ti.forecast.io");
-    var forecast = new ForecastIO({
-	    API_KEY: 'API_KEY'
-    });
-    
-    var condition = forecast.getCurrentConditions(lat, lon, onSuccessCallback, onErrorCallback);
-    
-    function onSuccessCallback(weather) {
-      weather.getSummary();
-    };
-    
-    function onErrorCallback(e) {
-      // Handle your errors in here
-    };
     
 There are also more returns which will be added into the plain Javascript in due course. 
     
 The MIT License (MIT)
 
-Copyright (c) 2013 Ian Tearle @iantearle
+Copyright (c) 2017 Richard Bultitude @rjbultitude based on a wrapper by Ian Tearle @iantearle
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
