@@ -3,6 +3,11 @@
   "title": "DarkSky.net JavaScript",
   "version": "1.0.0",
   "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
+  "keywords": [
+    "darksky",
+    "weather",
+    "api"
+  ],
   "author": {
     "name": "rjbultitude",
     "url": "http://point-b.co.uk"
