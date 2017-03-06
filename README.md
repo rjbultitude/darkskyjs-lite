@@ -1,5 +1,3 @@
-Pull Requests welcome, if you have used this script in a project let me know, I'd like to start a directory. Have fun. 
-
 darksky.net-javascript-api
 ==========================
 
@@ -26,7 +24,11 @@ and use the `Darksky` constructor as per the demo on the index page.
 
 ## Location data
 
-Forecast.io.js can handle multiple location requests. Any request _must_ be supplied as an array of objects as per the example in index.html. 
+darksky.net.js can handle multiple location requests. Any request _must_ be supplied as an array of objects as per the example in index.html. 
+
+##Returned data
+
+`getForecastToday` and `getForecastWeek` return a nested arrays for each supplied location. If you need clarity on which location is whoch you can pass in a name along with the lat long coordinates. 
 
 ## Dependencies
 
@@ -34,14 +36,13 @@ Forecast.io.js uses [moment.js](http://momentjs.com/) to handle date/time data a
 
 If you're using Require.JS be sure to load include these two libraries somewhere in your application.
 
-If you're using a CJS module loader be sure to install these two libraries using npm:
+If you're using a CJS module loader dependencies are automatically installed when you run 
 
-`npm install moment`
+`npm i darkskynet-api -D`
+
+or 
+
+`yarn add darkskynet-api -D`
 
 Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment)
-
-`npm install es6-promise`
-
 Ref: [https://www.npmjs.com/package/es6-promise](https://www.npmjs.com/package/es6-promise)
-    
-There are also more returns which will be added into the plain Javascript in due course. 
