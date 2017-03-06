@@ -1,12 +1,40 @@
-darksky.net-javascript-api
+#darkskyjs
+##A javascript api for darksky.net
 ==========================
 
-darksky.net JavaScript API
+##Features
+
+This package is designed to provide :
+
+* A simple API for making multiple simultaneous requests
+* A promised-based request that only returns data when all requests are successful
+* A callback that outputs the data
+* Valid current, daily and weekly weather data
 
 ## Getting Started
-PHP is required for proxy to work. This is a cross domain policy workaround.
 
-darksky.net.js is configured to work with both [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) and [CJS](https://en.wikipedia.org/wiki/CommonJS) applications. When the module is loaded it will return a constructor that, once run, will provide the necessary interface functions, namely:
+If you haven't already create a developer account here [https://darksky.net/dev/](https://darksky.net/dev/).
+
+A server side proxy is required for this to work. So create a file that will contain your key and be careful _not_ to commit it to a public code base.
+Here's an example PHP one. Replace the value of $api_key with your valid key. 
+
+```
+<?php
+// File Name: proxy.php
+
+$api_key = 'b962d5ee80be5293a234b69fb975629c';
+
+$API_ENDPOINT = 'https://api.forecast.io/forecast/';
+$url = $API_ENDPOINT . $api_key . '/';
+
+if(!isset($_GET['url'])) die();
+$url = $url . $_GET['url'];
+$url = file_get_contents($url);
+
+print_r($url);
+```
+
+darkskyjs is configured to work with both [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) and [CJS](https://en.wikipedia.org/wiki/CommonJS) applications. When the module is loaded it will return a constructor that, once run, will provide the necessary interface functions, namely:
 
 * `getCurrentConditions`
 * `getForecastToday`

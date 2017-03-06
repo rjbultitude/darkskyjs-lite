@@ -29,6 +29,9 @@ node_modules/
 
 # JavaScript
 dist/
+moment.js
+require.js
+es6-promise.js
 
 # Backend
 proxy.php

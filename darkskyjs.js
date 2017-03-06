@@ -50,6 +50,7 @@
 				console.log('API_KEY or PROXY_SCRIPT must be set in DarkSkyNet config');
 			}
 		}
+		console.log('config.API_KEY', config.API_KEY);
 		this.API_KEY = config.API_KEY;
 		this.url = (typeof config.PROXY_SCRIPT !== 'undefined') ? config.PROXY_SCRIPT + '?url=': 'https://api.darksky.net/forecast/' + config.API_KEY + '/';
 	}
