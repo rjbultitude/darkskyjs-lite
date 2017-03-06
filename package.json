@@ -7,14 +7,17 @@
     "name": "rjbultitude",
     "url": "http://point-b.co.uk"
   },
+  "license": "MIT",
   "contributors": [
     "Richard Bultitude",
     "Ian Tearle"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/rjbultitude/darksky.net-javascript-api"
+    "url": "git+https://github.com/rjbultitude/darksky.net-javascript-api.git"
   },
+  "homepage": "https://github.com/rjbultitude/darksky.net-javascript-api#readme",
+  "main": "darksky.net.js",
   "scripts": {
     "build": "gulp"
   },
