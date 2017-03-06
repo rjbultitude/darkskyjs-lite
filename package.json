@@ -8,10 +8,7 @@
         "weather",
         "api"
     ],
-    "author":{  
-        "name":"rjbultitude",
-        "url":"http://point-b.co.uk"
-    },
+    "author": "Richard Bultitude <richard.bultitude@gmail.com> (http://point-b.co.uk)",
     "licenses":[  
         {  
             "type":"MIT",
