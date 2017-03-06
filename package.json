@@ -9,14 +9,14 @@
   },
   "contributors": [
     "Richard Bultitude",
-    "Ian Tearle",
+    "Ian Tearle"
   ],
   "repository": {
     "type": "git",
     "url": ""
   },
   "scripts": {
-    "build": "gulp",
+    "build": "gulp"
   },
   "devDependencies": {
     "browserify": "^11.2.0",
