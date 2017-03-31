@@ -1,8 +1,10 @@
-#darkskyjs
+#darkSkyjs
 
 ---
 
-##A javascript api for darksky.net
+A javascript api for darksky.net
+
+---
 
 ##Features
 
