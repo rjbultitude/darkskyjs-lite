@@ -1,9 +1,9 @@
-#darkSkyjs
+# darkSkyjs
 ---
 A javascript api for darksky.net
 ---
 
-##Features
+## Features
 
 This package is designed to provide :
 
@@ -61,7 +61,7 @@ Any request _must_ be supplied as an array of objects like so:
 
 `darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}])`
 
-##Returned data
+## Returned data
 
 `getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. 
 
