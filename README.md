@@ -1,6 +1,5 @@
 #darkskyjs
 ##A javascript api for darksky.net
-==========================
 
 ##Features
 
@@ -13,7 +12,7 @@ This package is designed to provide :
 
 ## Getting Started
 
-If you haven't already create a developer account here [https://darksky.net/dev/](https://darksky.net/dev/).
+If you haven't already, create a developer account here [https://darksky.net/dev/](https://darksky.net/dev/).
 
 A server side proxy is required for this to work. So create a file that will contain your key and be careful _not_ to commit it to a public code base.
 Here's an example PHP one. Replace the value of $api_key with your valid key. 
@@ -48,15 +47,21 @@ If you're using [Webpack](http://webpack.github.io/), [Browserify](http://browse
 
 `var Darksky = require('darksky.net');`
 
-and use the `Darksky` constructor as per the demo on the index page.
+and use the `Darksky` constructor like so:
+
+`var darkSky = new DarkSky()`
 
 ## Location data
 
-darksky.net.js can handle multiple location requests. Any request _must_ be supplied as an array of objects as per the example in index.html. 
+darkskyjs can handle multiple location requests. Each request must comprise of two lat long coordinates. Optionally you can pass in a place name as a reference which will be returned shiuld the request be successful.
+
+Any request _must_ be supplied as an array of objects like so:
+
+`darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}])`
 
 ##Returned data
 
-`getForecastToday` and `getForecastWeek` return a nested arrays for each supplied location. If you need clarity on which location is whoch you can pass in a name along with the lat long coordinates. 
+`getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. 
 
 ## Dependencies
 
