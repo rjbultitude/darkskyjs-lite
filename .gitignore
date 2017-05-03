@@ -2,6 +2,7 @@
 # Add files/folders below to ignore from source control
 
 # Extensions
+*.editorconfig
 *.suo
 *.user
 *.sln.docstates
@@ -29,9 +30,6 @@ node_modules/
 
 # JavaScript
 dist/
-moment.js
-require.js
-es6-promise.js
 
 # Backend
 proxy.php
