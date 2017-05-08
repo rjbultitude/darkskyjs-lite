@@ -47,7 +47,7 @@ print_r($url);
 
 darkskyjs is configured to work with both [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) and [CJS](https://en.wikipedia.org/wiki/CommonJS) applications.
 
-It is recommended you install via [NPM](https://npmjs.org) where dependencies will be loaded automatically.
+It is recommended you install via [NPM](https://npmjs.com) where dependencies will be loaded automatically.
 If you're using [Webpack](http://webpack.github.io/), [Browserify](http://browserify.org/) or some other CJS module loader simply require the module like so
 
 `var Darksky = require('darkskyjs');`
@@ -66,15 +66,11 @@ You can then use one of the three methods listed below to retrieve location spec
 * `getForecastToday`
 * `getForecastWeek`
 
-A callback function must be used to make available the returned data, like so:
-
-`getCurrentConditions([])`
-
 If you're using [Require.JS](http://requirejs.org/) you will need to download [momentjs](https://momentjs.com/) and [es6-promise](https://github.com/stefanpenner/es6-promise).
 
 ## Location data
 
-darkskyjs can handle multiple location requests. Each request must comprise of two _lat_ _long_ coordinates. Optionally you can pass in a place name as a reference which will be returned should the request be successful.
+*darkskyjs* can handle multiple location requests. Each request must comprise of two _lat_ _long_ coordinates. Optionally you can pass in a place name as a reference which will be returned should the request be successful.
 
 Any request _must_ be supplied as an array of objects and should include a callback which will provide the returned data, like so:
 
@@ -86,7 +82,7 @@ darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}], function(condit
 
 ## Returned data
 
-`getCurrentConditions`, `getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. In order to match the locations that were supplied with what's returned it is recommended that the name property be used, like so
+`getCurrentConditions`, `getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. In order to match the locations that were supplied with what's returned it is recommended that the `name` property be used, like so
 
 ```
 darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}], function(conditions) {
