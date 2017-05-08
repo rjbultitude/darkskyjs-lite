@@ -1,6 +1,6 @@
 {
   "name": "darkskyjs",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
   "main": "darkskyjs.js",
   "dependencies": {

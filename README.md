@@ -73,30 +73,37 @@ print_r($url);
 
 ## Location data
 
-*darkskyjs* can handle multiple location requests. Each request must comprise of two _lat_ _long_ coordinates. Optionally you can pass in a place name as a reference which will be returned should the request be successful.
-
-Any request should be supplied as an array of objects and should include a callback which will provide the returned data, like so:
+*darkskyjs* can handle multiple location requests. Each request must comprise of two _latitude_ _longitude_ coordinates. Optionally you can pass in a place name as a reference which will be returned should the request be successful e.g.
 
 ```
-darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}], function(conditions) {
-    console.log(conditions[0].cloudCover());
-});
+[{latitude: 51.507351, longitude: -0.127758, name: 'London'}]
 ```
 
 If you don't pass an array it will create one for you, but it's best to do so for consistency and to avoid confusion as an array is what you'll get back.
 
 ## Returned data
 
-`getCurrentConditions`, `getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. In order to match the locations that were supplied with what's returned it is recommended that the `name` property be used, like so
+`getCurrentConditions`, `getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. In order to match the locations that were supplied with what's returned it is recommended that the `name` property be used. A callback is then used to supply the returned data.
 
 ```
-darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}], function(conditions) {
+darkSky.getCurrentConditions(
+  [
+    // location object(s)
+    {
+      latitude: 51.507351,
+      longitude: -0.127758,
+      name: 'London'
+    }
+  ],
+  // callback
+  function(conditions) {
     for (var i = 0, length = conditions.length; i < length; i++) {
-      if (conditions[i].name === 'london') {
+      if (conditions[i].name === 'London') {
         console.log(conditions[i].cloudCover());
       }
     }
-});
+  }
+);
 ```
 
 ## Dependencies
