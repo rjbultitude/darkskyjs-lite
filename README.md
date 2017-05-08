@@ -72,13 +72,15 @@ If you're using [Require.JS](http://requirejs.org/) you will need to download [m
 
 *darkskyjs* can handle multiple location requests. Each request must comprise of two _lat_ _long_ coordinates. Optionally you can pass in a place name as a reference which will be returned should the request be successful.
 
-Any request _must_ be supplied as an array of objects and should include a callback which will provide the returned data, like so:
+Any request should be supplied as an array of objects and should include a callback which will provide the returned data, like so:
 
 ```
 darkSky.getCurrentConditions([{51.507351, -0.127758, 'London'}], function(conditions) {
     console.log(conditions[0].cloudCover());
 });
 ```
+
+If you don't pass an array it will create one for you, but it's best to do so for consistency and to avoid confusion as an array is what you'll get back.
 
 ## Returned data
 
