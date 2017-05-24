@@ -16,9 +16,9 @@ This package is designed to provide :
 
 It differs from the [original library](https://github.com/iantearle/darksky.net-javascript-api) in three ways:
 
-* It only accepts an returns arrays of locations / weather conditions - This is a breaking change
+* It only accepts, and returns, arrays of locations/conditions - this is a breaking change
 * Each _get_ function's name matches the property name of what the DarkSky service returns
-* Recently added date points have been included. They are: `nearestStormDistance` and `nearestStormBearing`
+* Recently added data points have been included; they are: `nearestStormDistance` and `nearestStormBearing`
 
 
 ## Getting Started

@@ -1,6 +1,6 @@
 {
   "name": "darkskyjs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
   "main": "darkskyjs.js",
   "dependencies": {
@@ -9,11 +9,26 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "browserify": "^11.2.0",
+    "del": "^2.0.2",
+    "gulp": "^3.8.10",
+    "gulp-concat": "^2.6.1",
+    "gulp-declare": "^0.3.0",
+    "gulp-jscs": "^3.0.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-strip-debug": "^1.0.2",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.2",
+    "gulp-wrap": "^0.13.0",
+    "jshint-stylish": "^2.0.1",
+    "mocha": "^3.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "start": "SET NODE_ENV=dev && node server.js",
-    "test": "mocha --timeout 10000"
+    "coverage": "npm-run-all coverage:unit coverage:report",
+    "gulp": "gulp",
+    "test": "cross-env NODE_ENV=test mocha --env.dev --opts ./mocha.opts \"./test/unit/**/*.js\"",
   },
   "repository": {
     "type": "git",
