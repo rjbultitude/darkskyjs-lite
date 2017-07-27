@@ -83,3 +83,9 @@ or
 
 Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment)
 Ref: [https://www.npmjs.com/package/es6-promise](https://www.npmjs.com/package/es6-promise)
+
+### Plans
+
+Add methods for retrieving alerts
+
+Reduce repetion in three current methods by currying
