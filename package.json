@@ -8,14 +8,6 @@
     "moment": "^2.17.1"
   },
   "devDependencies": {
-<<<<<<< Updated upstream
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0"
-  },
-  "scripts": {
-    "start": "SET NODE_ENV=dev && node server.js",
-    "test": "mocha --timeout 10000"
-=======
     "browserify": "^11.2.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^7.1.1",
@@ -39,7 +31,6 @@
   "scripts": {
     "gulp": "gulp",
     "test": "cross-env NODE_ENV=test mocha --env.dev --opts ./mocha.opts \"./test/**/*.js\""
->>>>>>> Stashed changes
   },
   "repository": {
     "type": "git",
