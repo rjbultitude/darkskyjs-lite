@@ -51,7 +51,7 @@ describe('Test the methods of DarkSky', function() {
         var makeRequestStubSuccess = this.makeRequestStub.returns(Promise.resolve(this.xhr.response));
         expect(makeRequestStubSuccess()).to.eventually.be.an('object');
     });
-    it('makeReuest should return an object as a response', function() {
+    it('makeRequest should return an object as a response', function() {
         var makeRequestStubSuccess = this.makeRequestStub.returns(Promise.resolve(this.xhr.response));
         return makeRequestStubSuccess().then((response) => {
             expect(response).to.be.an('object');
@@ -62,5 +62,27 @@ describe('Test the methods of DarkSky', function() {
         return makeRequestStubFail().catch((e) => {
             expect(e).to.equal('error');
         });
+    });
+    it('checkObject should return an array if arg is not an array', function() {
+        expect(this.darkSky.checkObject({})).to.be.an('array');
+    });
+    it('checkObject should return the same array if arg is an array', function() {
+        var testArr = [0];
+        expect(this.darkSky.checkObject(testArr)).to.equal(testArr);
+    });
+    it('requestAllLocData should return an array when passed an array', function() {
+        var locations = [0, 1, 2];
+        expect(this.darkSky.requestAllLocData(locations)).to.be.an('array');
+    });
+    it('requestAllLocData should return an array of same length as arg array', function() {
+        var locations = [0, 1, 2];
+        expect(this.darkSky.requestAllLocData(locations)).to.have.lengthOf(3);
+    });
+    it('requestAllLocData should throw an error when passed a non-iterable data type', function() {
+        expect(function () {this.darkSky.requestAllLocData('test')}).to.throw();
+    });
+    xit('getCurrentConditions should call the callback on all success', function() {
+        var callback = sinon.spy();
+        expect(this.getCurrentConditions([0, 1, 2], callback)).to.call(callback);
     });
 });
