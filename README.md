@@ -14,6 +14,25 @@ This package is designed to provide :
 * A callback that outputs the data
 * Valid current, daily and weekly weather data
 
+## Recent updates
+
+The following data points have been added since 29/07/2017:
+
+* moonPhase
+* precipAccumulation
+* apparentTemperatureMax
+* apparentTemperatureMaxTime
+* apparentTemperatureMin
+* apparentTemperatureMinTime
+* precipIntensityMax
+* precipIntensityMaxTime
+* temperatureMaxTime
+* temperatureMinTime
+* uvIndex
+* uvIndexTime
+* windGust
+* windGustTime
+
 ## Getting Started
 
 If you haven't already, create a developer account here [https://darksky.net/dev/](https://darksky.net/dev/).
@@ -65,7 +84,11 @@ Any request _must_ be supplied as an array of objects like so:
 
 ## Returned data
 
-`getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. 
+This API returns a set of functions that allow you to access the raw data, rather then the raw data itself.
+
+`getCurrentConditions` returns an array of condition arrays. Each array represents one of locations you requested data for. 
+
+`getForecastToday` and `getForecastWeek` return nested arrays, one for each supplied location. Within that array is an array for each hour when using `getForecastToday` or one for each day when using `getForecastWeek`. 
 
 ## Dependencies
 
