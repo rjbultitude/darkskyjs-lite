@@ -14,12 +14,36 @@ This package is designed to provide :
 * A callback that outputs the data
 * Valid current, daily and weekly weather data
 
-It differs from the [original library](https://github.com/iantearle/darksky.net-javascript-api) in three ways:
+It differs from the original library in three ways:
 
 * It only accepts, and returns, arrays of locations/conditions - this is a breaking change
-* Each _get_ function's name matches the property name of what the DarkSky service returns
-* Recently added data points have been included; they are: `nearestStormDistance` and `nearestStormBearing`
+* Each get function's name matches the property name of what the DarkSky service returns
+* Missing data points have been included, see Recent Updates seciton below:
 
+
+## Recent updates
+
+The following data points have been added since 29/07/2017:
+
+* moonPhase
+* precipAccumulation
+* apparentTemperatureMax
+* apparentTemperatureMaxTime
+* apparentTemperatureMin
+* apparentTemperatureMinTime
+* precipIntensityMax
+* precipIntensityMaxTime
+* temperatureMaxTime
+* temperatureMinTime
+* uvIndex
+* uvIndexTime
+* windGust
+* windGustTime
+
+The following data points were added when first published on NPM
+
+* nearestStormDistance
+* nearestStormBearing
 
 ## Getting Started
 
@@ -73,8 +97,9 @@ print_r($url);
 
 ## Location data
 
-*darkskyjs* can handle multiple location requests. Each request must comprise of two _latitude_ _longitude_ coordinates. Optionally you can pass in a place name as a reference which will be returned should the request be successful e.g.
+_darkskyjs_ can handle multiple location requests. Simply pass in an array of requests (to one of the three methods listed above) to get data for multiple locations. 
 
+Each request must comprise of two key/value pairs: `latitude` and `longitude`. Optionally you can pass in a place name as a reference which will be returned should the request be successful e.g.
 ```
 [{latitude: 51.507351, longitude: -0.127758, name: 'London'}]
 ```
@@ -83,7 +108,13 @@ If you don't pass an array it will create one for you, but it's best to do so fo
 
 ## Returned data
 
-`getCurrentConditions`, `getForecastToday` and `getForecastWeek` return nested arrays for each supplied location. In order to match the locations that were supplied with what's returned it is recommended that the `name` property be used. A callback is then used to supply the returned data.
+This API returns a set of functions that allow you to access the raw data, rather then the raw data itself. Each function is named in exactly the same way as its respective data point e.g. `ozone()` will return the value for `ozone`.
+
+`getCurrentConditions` returns an array of condition arrays. Each array represents one of locations you requested data for. 
+
+`getForecastToday` and `getForecastWeek` return nested arrays, one for each supplied location. Within that array is an array for each hour when using `getForecastToday` or one for each day when using `getForecastWeek`.
+
+In order to match the locations that were supplied with what's returned it is recommended that the `name` property be used. A callback is then used to supply the returned data. For example:
 
 ```
 darkSky.getCurrentConditions(
@@ -112,5 +143,9 @@ DarkSkyJS uses
 [moment.js](http://momentjs.com/) to handle date/time data and
 [ES6 Promises Polyfill](https://github.com/jakearchibald/es6-promise) to handle the requests via promises
 
-Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment)
-Ref: [https://www.npmjs.com/package/es6-promise](https://www.npmjs.com/package/es6-promise)
+* Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment)
+* Ref: [https://www.npmjs.com/package/es6-promise](https://www.npmjs.com/package/es6-promise)
+
+### Plans
+
+Add a method for retrieving alerts
