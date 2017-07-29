@@ -101,4 +101,31 @@ describe('Test the methods of DarkSky', function() {
         this.darkSky.processData([0, 1, 2], [0, 1, 2], 'processCurrent', callback);
         expect(callback).to.be.calledOnce;
     });
+    it('processData should return false if fnKey is not a string', function() {
+        expect(this.darkSky.processData([0], [0], null, function() {})).to.be.false;
+    });
+    it('processWeek to return an array when passed valid args', function() {
+        var parsedData = {daily: {data: [0]}};
+        expect(this.darkSky.processWeek(parsedData, [0], 0)).to.be.an('array');
+    });
+    it('processWeek to throw when passed invalid parsedData arg', function() {
+        var parsedData = {};
+        expect(function() {this.darkSky.processWeek(parsedData, [0], 0)}).to.throw(TypeError);
+    });
+    it('processToday to return an array when passed valid args', function() {
+        var parsedData = {hourly: {data: [0]}};
+        expect(this.darkSky.processToday(parsedData, [0], 0)).to.be.an('array');
+    });
+    it('processToday to throw when passed invalid parsedData arg', function() {
+        var parsedData = {};
+        expect(function() {this.darkSky.processToday(parsedData, [0], 0)}).to.throw(TypeError);
+    });
+    it('processCurrent to return an object when passed valid args', function() {
+        var parsedData = {currently: {}};
+        expect(this.darkSky.processCurrent(parsedData, [0], 0)).to.be.an('object');
+    });
+    it('processCurrent to throw when passed invalid parsedData arg', function() {
+        var parsedData = {};
+        expect(function() {this.darkSky.processCurrent(parsedData, [0], 0)}).to.throw(TypeError);
+    });
 });
