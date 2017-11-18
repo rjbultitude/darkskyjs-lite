@@ -1,11 +1,18 @@
-# darkSkyjs
+# darkSkyjs-lite
 
+THIS IS A WIP. Please use [DarkSkyJS](https://github.com/rjbultitude/darkskyjs) for now.
 
 A javascript api for darksky.net
 
 [![Build Status](https://travis-ci.org/rjbultitude/darkskyjs.svg?branch=master)](https://travis-ci.org/rjbultitude/darkskyjs)
 
 ---
+
+## Special notice
+
+This is a smaller version of [DarkSkyJS](https://github.com/rjbultitude/darkskyjs) that only deals with current (the `currently` endpoint) weather conditions, rather than the `hourly` and `daily` ones. 
+
+The purpose of this version is to reduce the file size of the library and remove the dependency [Moment.JS](https://momentjs.com/), which could be considered quite large in proportion to the number of its features that are used.
 
 ## Features
 
@@ -14,7 +21,6 @@ This package is designed to provide :
 * A simple API for making multiple simultaneous requests
 * A promised-based request that only returns data when all requests are successful
 * A callback that outputs the data
-* Valid current, daily and weekly weather data
 
 It differs from the original library in three ways:
 
@@ -69,11 +75,9 @@ and use the `Darksky` constructor like so:
 
 `var darkSky = new DarkSky()`
 
-You can then use one of the three methods listed below to retrieve location specific weather data.
+You can then use the method listed below to retrieve location specific weather data.
 
 * `getCurrentConditions`
-* `getForecastToday`
-* `getForecastWeek`
 
 If you're using [Require.JS](http://requirejs.org/) you will need to download [momentjs](https://momentjs.com/) and [es6-promise](https://github.com/stefanpenner/es6-promise).
 
@@ -114,8 +118,6 @@ This API returns a set of functions that allow you to access the raw data, rathe
 
 `getCurrentConditions` returns an array of condition arrays. Each array represents one of locations you requested data for. 
 
-`getForecastToday` and `getForecastWeek` return nested arrays, one for each supplied location. Within that array is an array for each hour when using `getForecastToday` or one for each day when using `getForecastWeek`.
-
 In order to match the locations that were supplied with what's returned it is recommended that the `name` property be used. A callback is then used to supply the returned data. For example:
 
 ```
@@ -142,7 +144,6 @@ darkSky.getCurrentConditions(
 ## Dependencies
 
 DarkSkyJS uses
-[moment.js](http://momentjs.com/) to handle date/time data and
 [ES6 Promises Polyfill](https://github.com/jakearchibald/es6-promise) to handle the requests via promises
 
 * Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment)
