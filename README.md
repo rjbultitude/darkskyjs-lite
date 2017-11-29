@@ -12,11 +12,13 @@ A javascript api for darksky.net
 
 This is a smaller version of [DarkSkyJS](https://github.com/rjbultitude/darkskyjs) that only deals with current (the `currently` endpoint) weather conditions, rather than the `hourly` and `daily` ones. 
 
-The purpose of this version is to reduce the file size of the library and remove the dependency [Moment.JS](https://momentjs.com/), which could be considered quite large in proportion to the number of its features that are used.
+The purpose of this version is to reduce the file size of the library and remove the dependencies, specifically:
+[Moment.JS](https://momentjs.com/), which could be considered quite large in proportion to the number of its features that are used
+[Promise polyfill](https://github.com/jakearchibald/es6-promise), which is now supported in most browsers with the exception of IE11 and Opera Mini.
 
 ## Features
 
-This package is designed to provide :
+This package is designed to provide:
 
 * A simple API for making multiple simultaneous requests
 * A promised-based request that only returns data when all requests are successful
@@ -143,11 +145,7 @@ darkSky.getCurrentConditions(
 
 ## Dependencies
 
-DarkSkyJS uses
-[ES6 Promises Polyfill](https://github.com/jakearchibald/es6-promise) to handle the requests via promises
-
-* Ref: [https://www.npmjs.com/package/moment](https://www.npmjs.com/package/moment)
-* Ref: [https://www.npmjs.com/package/es6-promise](https://www.npmjs.com/package/es6-promise)
+This package has no dependencies
 
 ### Plans
 
