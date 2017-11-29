@@ -11,8 +11,8 @@ A javascript api for darksky.net
 This is a smaller version of [DarkSkyJS](https://github.com/rjbultitude/darkskyjs) that only deals with current (the `currently` endpoint) weather conditions, rather than the `hourly` and `daily` ones. 
 
 The purpose of this version is to reduce the file size of the library and remove the dependencies, specifically:
-[Moment.JS](https://momentjs.com/), which could be considered quite large in proportion to the number of its features that are used
-[Promise polyfill](https://github.com/jakearchibald/es6-promise), which is now supported in most browsers with the exception of IE11 and Opera Mini.
+ * [Moment.JS](https://momentjs.com/), which could be considered quite large in proportion to the number of its features that are used
+ * [Promise polyfill](https://github.com/jakearchibald/es6-promise), which is now supported in most browsers with the exception of IE11 and Opera Mini.
 
 ## Features
 
