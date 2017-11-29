@@ -1,7 +1,5 @@
 # darkSkyjs-lite
 
-THIS IS A WIP. Please use [DarkSkyJS](https://github.com/rjbultitude/darkskyjs) for now.
-
 A javascript api for darksky.net
 
 [![Build Status](https://travis-ci.org/rjbultitude/darkskyjs.svg?branch=master)](https://travis-ci.org/rjbultitude/darkskyjs)
