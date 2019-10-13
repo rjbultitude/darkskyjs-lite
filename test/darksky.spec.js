@@ -7,18 +7,6 @@ chai.use(chaiAsPromised);
 var sinon = require('sinon');
 var DarkSky = require('../lib/darkskyjs');
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function generateRandomNumbers(length) {
-    var numArray = [];
-    for (var i = 0; i < length; i++) {
-        numArray[i] = getRandomInt(1, 10000);
-    }
-    return numArray;
-}
-
 // Calculator module suite
 // Group specs with describe
 // Use as many specs as you like
@@ -28,10 +16,10 @@ describe('Test the methods of DarkSky', function() {
     });
     // executes once, before all tests
     beforeEach(function() {
-        this.randomPosLatitude = getRandomInt(0, 90);
-        this.randomPosLongitude = getRandomInt(0, 180);
-        this.randomNegLatitude = -Math.abs(getRandomInt(0, 90));
-        this.randomNegLongitiude = -Math.abs(getRandomInt(0, 180));
+        this.randomPosLatitude = 11;
+        this.randomPosLongitude = 180;
+        this.randomNegLatitude = -Math.abs(11);
+        this.randomNegLongitiude = -Math.abs(180);
         // stubs
         this.xhr = sinon.useFakeXMLHttpRequest();
         this.xhr.response = {};
@@ -103,22 +91,6 @@ describe('Test the methods of DarkSky', function() {
     });
     it('processData should return false if fnKey is not a string', function() {
         expect(this.darkSky.processData([0], [0], null, function() {})).to.be.false;
-    });
-    it('processWeek to return an array when passed valid args', function() {
-        var parsedData = {daily: {data: [0]}};
-        expect(this.darkSky.processWeek(parsedData, [0], 0)).to.be.an('array');
-    });
-    it('processWeek to throw when passed invalid parsedData arg', function() {
-        var parsedData = {};
-        expect(function() {this.darkSky.processWeek(parsedData, [0], 0)}).to.throw(TypeError);
-    });
-    it('processToday to return an array when passed valid args', function() {
-        var parsedData = {hourly: {data: [0]}};
-        expect(this.darkSky.processToday(parsedData, [0], 0)).to.be.an('array');
-    });
-    it('processToday to throw when passed invalid parsedData arg', function() {
-        var parsedData = {};
-        expect(function() {this.darkSky.processToday(parsedData, [0], 0)}).to.throw(TypeError);
     });
     it('processCurrent to return an object when passed valid args', function() {
         var parsedData = {currently: {}};
