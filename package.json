@@ -47,7 +47,7 @@
     "node": ">=4.2.4"
   },
   "bugs": {
-    "url": "https://github.com/rjbultitude/darksky.net-javascript-api/issues"
+    "url": "https://github.com/rjbultitude/darkskyjs-lite/issues"
   },
-  "homepage": "https://github.com/rjbultitude/darksky.net-javascript-api#readme"
+  "homepage": "https://github.com/rjbultitude/darkskyjs-lite#readme"
 }
