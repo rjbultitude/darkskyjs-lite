@@ -2,7 +2,7 @@
   "name": "darkskyjs-lite",
   "version": "0.1.0",
   "description": "A promise-based wrapper for requesting weather data from DarkSky.net",
-  "main": "darkskyjs.js",
+  "main": "lib/darkskyjs.js",
   "devDependencies": {
     "browserify": "^11.2.0",
     "chai": "^3.5.0",
