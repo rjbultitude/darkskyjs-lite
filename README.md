@@ -31,7 +31,8 @@ It differs from the original library in three ways:
 
 ## Recent updates
 
-In v0.1.0 there's improved error checking for the PROXY_SCRIPT URL. Invalid URLs now return warning. Added 14/10/2019
+_14/10/2019_
+In v0.1.0 there's improved error checking for the PROXY_SCRIPT URL - Invalid URLs now return warning. The response JSON is also checked for validity.
 
 The following data points have been added since 29/07/2017:
 
