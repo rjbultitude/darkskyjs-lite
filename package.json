@@ -9,6 +9,7 @@
     "chai-as-promised": "^7.1.1",
     "cross-env": "^5.0.1",
     "del": "^2.0.2",
+    "eslint": "^6.5.1",
     "gulp": "^3.8.10",
     "gulp-concat": "^2.6.1",
     "gulp-declare": "^0.3.0",
@@ -26,7 +27,8 @@
   },
   "scripts": {
     "gulp": "gulp",
-    "test": "cross-env NODE_ENV=test mocha --env.dev --opts ./mocha.opts \"./test/**/*.js\""
+    "test": "cross-env NODE_ENV=test mocha --env.dev --opts ./mocha.opts \"./test/**/*.js\"",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
