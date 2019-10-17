@@ -10,15 +10,6 @@
     "cross-env": "^5.0.1",
     "del": "^2.0.2",
     "eslint": "^6.5.1",
-    "gulp": "^3.8.10",
-    "gulp-concat": "^2.6.1",
-    "gulp-declare": "^0.3.0",
-    "gulp-jscs": "^3.0.0",
-    "gulp-jshint": "^1.9.0",
-    "gulp-strip-debug": "^1.0.2",
-    "gulp-uglify": "^1.1.0",
-    "gulp-util": "^3.0.2",
-    "gulp-wrap": "^0.13.0",
     "jshint-stylish": "^2.0.1",
     "mocha": "^3.2.0",
     "sinon": "^2.4.1",
@@ -26,7 +17,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "gulp": "gulp",
     "test": "cross-env NODE_ENV=test mocha --env.dev --opts ./mocha.opts \"./test/**/*.js\"",
     "lint": "eslint ."
   },
