@@ -71,17 +71,17 @@ describe('Test the methods of DarkSky', function() {
     it('requestAllLocData should throw an error when passed a non-iterable data type', function() {
         expect(function () {this.darkSky.requestAllLocData('test')}).to.throw();
     });
-    it('checkData should return false when forecasts arg has length of 0', function() {
-        expect(this.darkSky.checkData([])).to.be.false;
+    it('checkData should throw an errore when forecasts arg has length of 0', function() {
+        expect(() => { this.darkSky.checkData([]) }).to.throw;
     });
-    it('checkData should return false when forecasts arg is null', function() {
-        expect(this.darkSky.checkData(null)).to.be.false;
+    it('checkData should throw when forecasts arg is null', function() {
+        expect(() => { this.darkSky.checkData(null) }).to.throw;
     });
-    it('checkData should return false when forecasts arg is undefined', function() {
-        expect(this.darkSky.checkData(undefined)).to.be.false;
+    it('checkData should throw when forecasts arg is undefined', function() {
+        expect(() => { this.darkSky.checkData(undefined) }).to.throw;
     });
     it('processData should be called once when checkData is called with correct args', function() {
-        this.darkSky.checkData(['test']);
+        this.darkSky.checkData(['test'], null, null, () => {});
         expect(this.darkSky.processData).to.be.calledOnce;
     });
     it('processData should call it\'s callback arg', function() {
